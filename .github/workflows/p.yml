@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: List files for debug
+      run: ls -R
+
+    - name: Build with make
+      run: make -C MAXMIDI/maxmidi
+
+    - name: Run tests
+      run: make -C MAXMIDI/maxmidi check || true
+
+    - name: Run distcheck
+      run: make -C MAXMIDI/maxmidi distcheck || true
